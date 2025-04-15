@@ -1,15 +1,14 @@
-// Evaluacion de la Cadena 'aprobado'
+// Evaluacion de una Cadena Incorrecta
 digraph {
 	dpi=300 rankdir=LR size="8,5"
-	graph [fontname=Arial fontsize=16 label="Evaluacion de la Cadena 'aprobado'" labelloc=t]
+	graph [fontname=Arial fontsize=16 label="Evaluacion de una Cadena Incorrecta" labelloc=t]
 	node [fontname=Arial fontsize=12]
 	edge [fontname=Arial fontsize=10]
 	inicio [label=inicio color="#505050" fillcolor="#F5F5F5" penwidth=0.8 shape=circle style="filled,rounded"]
 	letra [label=letra color="#505050" fillcolor="#F5F5F5" penwidth=0.8 shape=circle style="filled,rounded"]
 	error [label="error
 (1)" color="#505050" fillcolor="#FB8072" penwidth=1.5 shape=circle style="filled,rounded"]
-	A [label="A
-(1)" color="#505050" fillcolor="#4CAF50" penwidth=1.5 shape=circle style="filled,rounded"]
+	A [label=A color="#505050" fillcolor="#F5F5F5" penwidth=0.8 shape=circle style="filled,rounded"]
 	P [label=P color="#505050" fillcolor="#F5F5F5" penwidth=0.8 shape=circle style="filled,rounded"]
 	R [label=R color="#505050" fillcolor="#F5F5F5" penwidth=0.8 shape=circle style="filled,rounded"]
 	O [label=O color="#505050" fillcolor="#F5F5F5" penwidth=0.8 shape=circle style="filled,rounded"]
@@ -25,10 +24,10 @@ digraph {
 	letra -> T_2 [arrowsize=0.8 color="#505050" penwidth=1.0]
 	T_2 -> error [arrowsize=0.8 color="#505050" penwidth=1.0]
 	T_2 -> A [arrowsize=0.8 color="#505050" penwidth=1.0]
-	T_3 [label=T_3 color="#505050" fillcolor="#4CAF50" penwidth=1.2 shape=box style="filled,rounded"]
+	T_3 [label=T_3 color="#505050" fillcolor="#D9D9D9" penwidth=1.2 shape=box style="filled,rounded"]
 	A -> T_3 [arrowsize=0.8 color="#505050" penwidth=1.0]
 	T_3 -> P [arrowsize=0.8 color="#505050" penwidth=1.0]
-	T_8 [label=T_8 color="#505050" fillcolor="#4CAF50" penwidth=1.2 shape=box style="filled,rounded"]
+	T_8 [label=T_8 color="#505050" fillcolor="#D9D9D9" penwidth=1.2 shape=box style="filled,rounded"]
 	A -> T_8 [arrowsize=0.8 color="#505050" penwidth=1.0]
 	T_8 -> error [arrowsize=0.8 color="#505050" penwidth=1.0]
 	T_4 [label=T_4 color="#505050" fillcolor="#D9D9D9" penwidth=1.2 shape=box style="filled,rounded"]
@@ -73,10 +72,10 @@ digraph {
 	T_18 [label=T_18 color="#505050" fillcolor="#D9D9D9" penwidth=1.2 shape=box style="filled,rounded"]
 	O2 -> T_18 [arrowsize=0.8 color="#505050" penwidth=1.0]
 	T_18 -> error [arrowsize=0.8 color="#505050" penwidth=1.0]
-	label="Procesando: 'A1P2R3O4B5A6D7O8'"
+	label="Procesando: 'X1A2P3R4O5B6A7D8O9' - Evaluando: '6'"
 	fontcolor="#303030" fontsize=18
-	graph [label="Procesando: 'A1P2R3O4B5A6D7O8'
-Paso 1"]
+	graph [label="Procesando: 'X1A2P3R4O5B6A7D8O9' - Evaluando: '6'
+Paso 12"]
 	graph [label="
-Paso 1"]
+Paso 11.5"]
 }

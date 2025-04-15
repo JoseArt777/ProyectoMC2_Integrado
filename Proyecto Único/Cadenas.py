@@ -2,6 +2,7 @@ import graphviz
 import time
 import os
 import random
+import shutil
 from datetime import datetime
 
 class PetriNet:
@@ -302,36 +303,41 @@ class PetriNet:
             
             print(f"  => {status}")
         
-        print("RESULTADO DEL PROCESAMIENTO:")
+        print("\nRESULTADO DEL PROCESAMIENTO:")
         print(f"Cadena filtrada: '{filtered_string}'")
         
         # Comprueba si la palabra "aprobado" se extrajo correctamente
         if filtered_string == "aprobado":
-            print(" ¡VALIDACIÓN EXITOSA! Se obtuvo la palabra 'aprobado'.")
+            print("\n[EXITO] ¡VALIDACIÓN EXITOSA! Se obtuvo la palabra 'aprobado'.")
             success = True
         else:
-            print(" ERROR: La cadena no produce la palabra 'aprobado'.")
+            print("\n[ERROR] La cadena no produce la palabra 'aprobado'.")
             success = False
         
         # tiempo de procesamiento
         elapsed = datetime.now() - self.start_time
-        print(f"Tiempo de procesamiento: {elapsed.total_seconds():.2f} segundos")
+        print(f"\nTiempo de procesamiento: {elapsed.total_seconds():.2f} segundos")
         print(f"{'='*50}\n")
         
         return success, filtered_string
         
     def generate_animation(self, output_dir="petri_animation", prefix=""):
         """Genera una secuencia de imagenes para la animación con mejor estilo"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        if prefix:
-            dir_name = f"{output_dir}_{prefix}_{timestamp}"
-        else:
-            dir_name = f"{output_dir}_{timestamp}"
-            
-        if not os.path.exists(dir_name):
-            os.makedirs(dir_name)
         
-        print(f" GENERANDO ANIMACIÓN...")
+        # En lugar de usar timestamp, usamos directorios fijos para sobreescribir
+        if prefix:
+            dir_name = f"{output_dir}_{prefix}"
+        else:
+            dir_name = output_dir
+            
+        # Si el directorio ya existe, lo eliminamos para recrearlo
+        if os.path.exists(dir_name):
+            shutil.rmtree(dir_name)
+            
+        # Crear directorio
+        os.makedirs(dir_name)
+        
+        print(f"\n GENERANDO ANIMACIÓN...")
         print(f"Directorio de salida: {dir_name}")
         
         for i, dot in enumerate(self.history):
@@ -349,7 +355,7 @@ class PetriNet:
             dot.render(filename, cleanup=True)
             print(f"  Generada imagen {i+1}/{len(self.history)}")
         
-        print(f" Animación generada exitosamente con {len(self.history)} cuadros.")
+        print(f"\n Animación generada exitosamente con {len(self.history)} cuadros.")
         print(f"Ruta: {dir_name}")
         
         #  HTML  para visualizar la secuencia
@@ -551,7 +557,7 @@ def main():
     
     success, filtered = petri.process_string(test_string)
     
-    # Generamoa animación
+    # Generamos animación
     num_frames = petri.generate_animation(prefix="cadena_correcta")
     
     print("\nProbando con una cadena incorrecta:")
@@ -560,6 +566,8 @@ def main():
     petri.generate_animation(prefix="cadena_incorrecta")
     
     print_header("FIN DEL PROCESAMIENTO")
+    # Esperar input del usuario antes de terminar
+    input("\nPresione Enter para finalizar...")
 
 if __name__ == "__main__":
     main()
