@@ -300,22 +300,22 @@ class PetriNet:
             elif result == "error":
                 status = f"Error: caracter no valido"
             
-            print(f"  → {status}")
+            print(f"  => {status}")
         
-        print("\nRESULTADO DEL PROCESAMIENTO:")
+        print("RESULTADO DEL PROCESAMIENTO:")
         print(f"Cadena filtrada: '{filtered_string}'")
         
         # Comprueba si la palabra "aprobado" se extrajo correctamente
         if filtered_string == "aprobado":
-            print("\n✅ ¡VALIDACIÓN EXITOSA! Se obtuvo la palabra 'aprobado'.")
+            print(" ¡VALIDACIÓN EXITOSA! Se obtuvo la palabra 'aprobado'.")
             success = True
         else:
-            print("\n❌ ERROR: La cadena no produce la palabra 'aprobado'.")
+            print(" ERROR: La cadena no produce la palabra 'aprobado'.")
             success = False
         
         # tiempo de procesamiento
         elapsed = datetime.now() - self.start_time
-        print(f"\nTiempo de procesamiento: {elapsed.total_seconds():.2f} segundos")
+        print(f"Tiempo de procesamiento: {elapsed.total_seconds():.2f} segundos")
         print(f"{'='*50}\n")
         
         return success, filtered_string
@@ -331,7 +331,7 @@ class PetriNet:
         if not os.path.exists(dir_name):
             os.makedirs(dir_name)
         
-        print(f"\n🎬 GENERANDO ANIMACIÓN...")
+        print(f" GENERANDO ANIMACIÓN...")
         print(f"Directorio de salida: {dir_name}")
         
         for i, dot in enumerate(self.history):
@@ -349,7 +349,7 @@ class PetriNet:
             dot.render(filename, cleanup=True)
             print(f"  Generada imagen {i+1}/{len(self.history)}")
         
-        print(f"\n✨ Animación generada exitosamente con {len(self.history)} cuadros.")
+        print(f" Animación generada exitosamente con {len(self.history)} cuadros.")
         print(f"Ruta: {dir_name}")
         
         #  HTML  para visualizar la secuencia

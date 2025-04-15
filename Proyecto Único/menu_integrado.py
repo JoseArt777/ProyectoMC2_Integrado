@@ -7,6 +7,8 @@ import sys
 class MenuApp:
     def __init__(self, root):
         self.root = root
+        # Obtener la ruta del directorio actual donde se encuentra el script
+        self.script_dir = os.path.dirname(os.path.abspath(__file__))
         self.setup_ui()
         
     def setup_ui(self):
@@ -60,11 +62,27 @@ class MenuApp:
                            bg="#e74c3c", fg="white", relief=tk.FLAT,
                            activebackground="#c0392b", activeforeground="white")
         salir_btn.pack(pady=10)
+        
+        # Mensaje de estado
+        self.status_label = tk.Label(main_frame, text="Listo para ejecutar", 
+                                 font=subtitle_font, bg="#f0f0f0", fg="#7f8c8d")
+        self.status_label.pack(pady=10)
 
     def ejecutar_semaforos(self):
         """Ejecuta la aplicación de semáforos"""
         # Ocultar la ventana principal mientras se ejecuta el programa
         self.root.withdraw()
+        
+        # Ruta del script de semáforos (corregida)
+        semaforos_path = os.path.join(self.script_dir, "Petri_Network_MC2-main", "app.py")
+        self.status_label.config(text=f"Ruta de semáforos: {semaforos_path}")
+        
+        # Comprobar si el archivo existe
+        if not os.path.exists(semaforos_path):
+            messagebox.showerror("Error", 
+                                f"No se encontró el archivo:\n{semaforos_path}\n\nVerifique la ubicación del archivo.")
+            self.root.deiconify()
+            return
         
         # Mostrar mensaje
         messagebox.showinfo("Iniciando Simulación", 
@@ -74,10 +92,17 @@ class MenuApp:
                            "Para finalizar, cierre la aplicación.")
         
         try:
-            # Ejecutar el script
-            process = subprocess.Popen(["python", "app.py"], 
+            # Ejecutar el script con la ruta correcta
+            # Nos cambiamos al directorio donde está app.py antes de ejecutarlo
+            app_dir = os.path.dirname(semaforos_path)
+            os.chdir(app_dir)
+            
+            process = subprocess.Popen(["python", semaforos_path], 
                                      stdout=subprocess.PIPE, 
                                      stderr=subprocess.PIPE)
+            
+            # Volver al directorio original
+            os.chdir(self.script_dir)
                         
             # No esperamos a que termine, porque Flask bloquea el hilo
             messagebox.showinfo("Información", 
@@ -95,6 +120,17 @@ class MenuApp:
         # Ocultar la ventana principal mientras se ejecuta el programa
         self.root.withdraw()
         
+        # Ruta del script de cadenas (corregida)
+        cadenas_path = os.path.join(self.script_dir, "Cadenas.py")
+        self.status_label.config(text=f"Ruta de cadenas: {cadenas_path}")
+        
+        # Comprobar si el archivo existe
+        if not os.path.exists(cadenas_path):
+            messagebox.showerror("Error", 
+                                f"No se encontró el archivo:\n{cadenas_path}\n\nVerifique la ubicación del archivo.")
+            self.root.deiconify()
+            return
+        
         # Mostrar mensaje
         messagebox.showinfo("Iniciando Evaluación", 
                            "Iniciando la evaluación de cadenas.\n\n"
@@ -102,11 +138,12 @@ class MenuApp:
         
         try:
             # Ejecutar el script y esperar a que termine
-            process = subprocess.run(["python", "Cadenas.py"], 
+            process = subprocess.run(["python", cadenas_path], 
                                    check=True, 
                                    stdout=subprocess.PIPE, 
                                    stderr=subprocess.PIPE,
-                                   text=True)
+                                   text=True,
+                                   cwd=self.script_dir)  # Especificamos el directorio de trabajo
             
             # Mostrar el resultado
             messagebox.showinfo("Completado", 
